@@ -37,5 +37,5 @@ def main(project: str, silence: Optional[bool] = True) -> None:
 # end main
 
 if __name__ == "__main__":
-    main(project="project")
+    main(project="file_flow")
 # end if
