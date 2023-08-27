@@ -24,7 +24,7 @@ def main() -> None:
         include=[],
         requirements="requirements.txt",
         dev_requirements="requirements-dev.txt",
-        name='file-flow',
+        name='fileflowio',
         version='0.0.0',
         description=(
             "An event system for file operations "
