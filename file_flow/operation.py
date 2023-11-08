@@ -1,7 +1,7 @@
 # operation.py
 
 import datetime as dt
-from typing import TypeVar, Generic, Optional, Callable
+from typing import TypeVar, Generic, Callable
 
 from attrs import define
 
@@ -23,7 +23,7 @@ class OperationResponse(ProcessResponse[_D, _O]):
 class Operator(Generic[_D, _O]):
     """A class to represent a """
 
-    def __init__(self, command: Optional[Callable[[_D], _O]] = None) -> None:
+    def __init__(self, command: Callable[[_D], _O] = None) -> None:
         """
         Defines the command of the operator.
 

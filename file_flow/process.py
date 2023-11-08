@@ -2,7 +2,7 @@
 
 import datetime as dt
 from uuid import uuid4
-from typing import Generic, TypeVar, Optional, Any
+from typing import Generic, TypeVar, Any
 
 from attrs import define
 
@@ -40,8 +40,8 @@ class ProcessResponse(Generic[_D, _O]):
     data: _D
     output: _O
     time: ProcessTime
-    process_id: Optional[str] = None
-    caller: Optional[Any] = None
+    process_id: str = None
+    caller: Any = None
 
     def __attrs_post_init__(self) -> None:
         """Defines the attributes after initialization."""

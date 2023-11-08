@@ -1,8 +1,7 @@
 # io.py
 
 from typing import (
-    TypeVar, Generic, ClassVar,
-    Optional, Callable, Type, Any, Dict
+    TypeVar, Generic, ClassVar, Callable, Any
 )
 
 from attrs import define
@@ -20,16 +19,16 @@ _D = TypeVar("_D")
 class IO(Generic[_D]):
     """A class to represent a generic io operation handler."""
 
-    loader: Optional[Callable[[str], _D]] = None
-    saver: Optional[Callable[[_D, str], None]] = None
+    loader: Callable[[str], _D] = None
+    saver: Callable[[_D, str], Any] = None
 
     name: ClassVar[str] = None
-    silent: Optional[bool] = None
+    silent: bool = None
 
-    load_kwargs: Optional[Dict[str, Any]] = None
-    save_kwargs: Optional[Dict[str, Any]] = None
+    load_kwargs: dict[str, Any] = None
+    save_kwargs: dict[str, Any] = None
 
-    base: ClassVar[Type] = _D
+    base: ClassVar[type] = _D
 
     def load(self, path: str, **kwargs: Any) -> _D:
         """
@@ -64,7 +63,7 @@ class TextIO(IO[str]):
     """A class to represent a text io operation handler."""
 
     name: ClassVar[str] = "txt"
-    base: ClassVar[Type[str]] = str
+    base: ClassVar[type[str]] = str
 
     def load(self, path: str, **kwargs: Any) -> str:
         """
@@ -99,7 +98,7 @@ class BytesIO(IO[bytes]):
     """A class to represent a bytes io operation handler."""
 
     name: ClassVar[str] = "bytes"
-    base: ClassVar[Type[bytes]] = bytes
+    base: ClassVar[type[bytes]] = bytes
 
     def load(self, path: str, **kwargs: Any) -> bytes:
         """
@@ -135,6 +134,6 @@ _O = TypeVar("_O")
 class IOContainer(Generic[_D, _O]):
     """A class to contain io objects."""
 
-    input: Optional[IO[_D]] = None
-    output: Optional[IO[_O]] = None
+    input: IO[_D] = None
+    output: IO[_D] = None
 # end IOContainer

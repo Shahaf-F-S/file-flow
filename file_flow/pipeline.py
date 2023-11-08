@@ -1,7 +1,7 @@
 # pipeline.py
 
 import datetime as dt
-from typing import Iterable, List, Optional, TypeVar, Generic
+from typing import Iterable, TypeVar, Generic
 
 from attrs import define
 
@@ -12,14 +12,14 @@ _D = TypeVar("_D")
 _O = TypeVar("_O")
 
 @define
-class PipelineResponse(ProcessResponse[_D, List[OperationResponse[_D, _O]]]):
+class PipelineResponse(ProcessResponse[_D, list[OperationResponse[_D, _O]]]):
     """A class to represent a response object for an operation of a file."""
 # end PipelineResponse
 
 class Pipeline(Generic[_D, _O]):
     """A class to represent a pipeline of file operations."""
 
-    def __init__(self, operators: Optional[Iterable[Operator]] = None) -> None:
+    def __init__(self, operators: Iterable[Operator] = None) -> None:
         """
         Defines the pipeline attributes.
 
@@ -42,7 +42,7 @@ class Pipeline(Generic[_D, _O]):
 
         start = dt.datetime.now()
 
-        responses: List[OperationResponse] = []
+        responses: list[OperationResponse] = []
 
         for operation in self.operators:
             response = operation(data)
