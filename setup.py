@@ -16,7 +16,6 @@ def main() -> None:
 
     setup(
         package="file_flow",
-        project="pyproject.toml",
         exclude=[
             "__pycache__",
             "*.pyc"
@@ -25,7 +24,7 @@ def main() -> None:
         requirements="requirements.txt",
         dev_requirements="requirements-dev.txt",
         name='fileflowio',
-        version='0.0.5',
+        version='0.0.6',
         description=(
             "An event system for file operations "
             "to execute commands for file events."
