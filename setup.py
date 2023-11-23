@@ -25,7 +25,7 @@ def main() -> None:
         requirements="requirements.txt",
         dev_requirements="requirements-dev.txt",
         name='fileflowio',
-        version='0.0.0',
+        version='0.0.2',
         description=(
             "An event system for file operations "
             "to execute commands for file events."
