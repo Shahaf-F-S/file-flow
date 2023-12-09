@@ -27,8 +27,6 @@ class ProcessTime:
         """
 
         return self.end - self.start
-    # end time
-# end ProcessTime
 
 _D = TypeVar("_D")
 _O = TypeVar("_O")
@@ -47,5 +45,3 @@ class ProcessResponse(Generic[_D, _O]):
         """Defines the attributes after initialization."""
 
         self.process_id = self.process_id or str(uuid4())
-    # end __attrs_post_init__
-# end ProcessResponse

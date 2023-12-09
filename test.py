@@ -1,4 +1,4 @@
-# test_file_flow.py
+# test.py
 
 from file_flow.events import FileSystemEvent
 from file_flow.data_io import TextIO, IOContainer
@@ -18,8 +18,6 @@ def main() -> None:
     watcher = Watcher(root="demo", handler=handler)
 
     watcher.run()
-# end main
 
 if __name__ == '__main__':
     main()
-# end if

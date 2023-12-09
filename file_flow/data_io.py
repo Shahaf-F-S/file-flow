@@ -41,8 +41,6 @@ class IO(Generic[_D]):
 
         if self.loader is not None:
             return self.loader(path)
-        # end if
-    # end load
 
     def save(self, data: _D, path: str, **kwargs: Any) -> None:
         """
@@ -54,9 +52,6 @@ class IO(Generic[_D]):
 
         if self.saver is not None:
             self.saver(data, path)
-        # end if
-    # end load
-# end ID
 
 @define
 class TextIO(IO[str]):
@@ -76,8 +71,6 @@ class TextIO(IO[str]):
 
         with open(path, "r") as file:
             return file.read()
-        # end open
-    # end load
 
     def save(self, data: str, path: str, **kwargs: Any) -> None:
         """
@@ -89,9 +82,6 @@ class TextIO(IO[str]):
 
         with open(path, "w") as file:
             file.write(data)
-        # end open
-    # end load
-# end TextIO
 
 @define
 class BytesIO(IO[bytes]):
@@ -111,8 +101,6 @@ class BytesIO(IO[bytes]):
 
         with open(path, "rb") as file:
             return file.read()
-        # end open
-    # end load
 
     def save(self, data: bytes, path: str, **kwargs: Any) -> None:
         """
@@ -124,9 +112,6 @@ class BytesIO(IO[bytes]):
 
         with open(path, "wb") as file:
             file.write(data)
-        # end open
-    # end load
-# end BytesIO
 
 _O = TypeVar("_O")
 
@@ -136,4 +121,3 @@ class IOContainer(Generic[_D, _O]):
 
     input: IO[_D] = None
     output: IO[_D] = None
-# end IOContainer

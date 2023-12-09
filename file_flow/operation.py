@@ -18,7 +18,6 @@ _O = TypeVar("_O")
 @define
 class OperationResponse(ProcessResponse[_D, _O]):
     """A class to represent a response object for an operation of a file."""
-# end OperationResponse
 
 class Operator(Generic[_D, _O]):
     """A class to represent a """
@@ -31,7 +30,6 @@ class Operator(Generic[_D, _O]):
         """
 
         self.command = command
-    # end __init__
 
     def __call__(self, data: _D) -> OperationResponse[_D, _O]:
         """
@@ -43,7 +41,6 @@ class Operator(Generic[_D, _O]):
         """
 
         return self.execute(data=data)
-    # end __call__
 
     def before(self, data: _D) -> None:
         """
@@ -53,7 +50,6 @@ class Operator(Generic[_D, _O]):
 
         :return: Any return value.
         """
-    # end before
 
     def after(self, data: _O) -> None:
         """
@@ -63,7 +59,6 @@ class Operator(Generic[_D, _O]):
 
         :return: Any return value.
         """
-    # end after
 
     def operation(self, data: _D) -> _O:
         """
@@ -79,8 +74,6 @@ class Operator(Generic[_D, _O]):
 
         else:
             return self.command(data)
-        # end if
-    # end operation
 
     def execute(self, data: _D) -> OperationResponse[_D, _O]:
         """
@@ -107,5 +100,3 @@ class Operator(Generic[_D, _O]):
             data=data,
             output=results
         )
-    # end execute
-# end Operator

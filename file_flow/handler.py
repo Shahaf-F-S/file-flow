@@ -40,7 +40,6 @@ def relocation_path(path: str, source: str, destination: str) -> str:
             str(Path(destination).absolute())
         )
     )
-# end relocation_path
 
 def match_path(
         path: str,
@@ -67,20 +66,17 @@ def match_path(
         excluded_patterns = {pattern.lower() for pattern in excluded_patterns}
 
         path = PureWindowsPath(path)
-    # end if
 
     common_patterns = included_patterns & excluded_patterns
     if common_patterns:
         raise ValueError(
             f"conflicting patterns '{common_patterns}' included and excluded."
         )
-    # end if
 
     return (
         any(path.match(p) for p in included_patterns) and
         not any(path.match(p) for p in excluded_patterns)
     )
-# end match_path
 
 _D = TypeVar("_D")
 _O = TypeVar("_O")
@@ -103,7 +99,6 @@ class HandlingResponse(Generic[_D, _O]):
         """Defines the attributes after initialization."""
 
         self.process_id = self.process_id or str(uuid4())
-    # end __attrs_post_init__
 
     @property
     def source(self) -> str:
@@ -129,8 +124,6 @@ class HandlingResponse(Generic[_D, _O]):
 
         except IndexError:
             raise ValueError("No result value due to no operations.")
-        # end try
-    # end result
 
     def has_result(self) -> bool:
         """
@@ -146,9 +139,6 @@ class HandlingResponse(Generic[_D, _O]):
 
         except ValueError:
             return False
-        # end try
-    # end has_result
-# end HandlingResponse
 
 Pipelines = dict[type[FileSystemEvent], Iterable[Pipeline]]
 Patterns = dict[str, IOContainer]
@@ -191,34 +181,27 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
 
         if ignore_directories is None:
             ignore_directories = self.IGNORE_DIRECTORIES
-        # end if
 
         if case_sensitive is None:
             case_sensitive = self.CASE_SENSITIVE
-        # end if
 
         if pipelines is None:
             pipelines = self.PIPELINES
-        # end if
 
         if patterns is None:
             patterns = self.PATTERNS
-        # end if
 
         if ignored is None:
             ignored = self.IGNORED
-        # end if
 
         if destination is None:
             destination = self.DESTINATION
-        # end if
 
         if None in (patterns, pipelines):
             raise ValueError(
                 "patterns and pipelines must be defined, "
                 "either by class or by instance."
             )
-        # end if
 
         self.pipelines = pipelines
 
@@ -239,7 +222,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         self.ignored: list[type[FileSystemEvent]] = list(ignored or [])
 
         self.saving = True
-    # end __init__
 
     def is_mach(self, path: str, pattern: str) -> bool:
         """
@@ -257,7 +239,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
             excluded_patterns=[],
             case_sensitive=self.case_sensitive
         )
-    # end is_mach
 
     def is_valid_event(self, event: FileSystemEvent) -> bool:
         """
@@ -271,29 +252,21 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         for base in self.ignored:
             if isinstance(event, base):
                 return False
-            # end if
-        # end if
 
         for base in self.pipelines:
             if isinstance(event, base):
                 return True
-            # end if
-        # end if
 
         return False
-    # end is_valid_event
 
     def get_event_match(self, event: FileSystemEvent) -> tuple[str, IOContainer] | None:
 
         for pattern, io_container in self.patterns_io.items():
             if self.is_mach(path=event.src_path, pattern=pattern):
                 return pattern, io_container
-            # end if
 
         else:
             return
-        # end if
-    # end get_event_match
 
     def is_registered(self, event: FileSystemEvent) -> bool:
         """
@@ -305,7 +278,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         """
 
         return event.key in self.handled
-    # end is_registered
 
     def register_event(self, event: FileSystemEvent) -> None:
         """
@@ -315,7 +287,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         """
 
         self.handled.append(event.key)
-    # end register_event
 
     def unregister_event(self, event: FileSystemEvent) -> None:
         """
@@ -325,7 +296,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         """
 
         self.handled.remove(event.key)
-    # end unregister_event
 
     def before(
             self, pattern: str, io: IOContainer, event: FileSystemEvent
@@ -337,7 +307,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         :param io: The io object for data I/O.
         :param event: The file system event to handle.
         """
-    # end before
 
     def after(
             self, pattern: str, io: IOContainer, event: FileSystemEvent
@@ -349,7 +318,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         :param io: The io object for data I/O.
         :param event: The file system event to handle.
         """
-    # end after
 
     def load(
             self,
@@ -372,10 +340,8 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
 
         if path is None:
             path = event.src_path
-        # end if
 
         return io.input.load(path=path)
-    # end load
 
     def before_load(
             self,
@@ -390,7 +356,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         :param event: The file system event to handle.
         :param path: The path to the file to load.
         """
-    # end before_save
 
     def after_load(
             self,
@@ -407,7 +372,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         :param path: The path to the file to load.
         :param data: The loaded data.
         """
-    # end after_save
 
     def saving_path(
             self,
@@ -428,7 +392,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
 
         if path is None:
             path = response.destination
-        # end if
 
         if path is None:
             location, file = os.path.split(response.source)
@@ -441,11 +404,8 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
                     path=response.source, source=location,
                     destination=self.destination
                 )
-            # end if
-        # end if
 
         return path
-    # end saving_path
 
     def save(
             self,
@@ -465,16 +425,13 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
 
         if path is None:
             path = response.destination
-        # end if
 
         if path is None:
             path = self.saving_path(response=response, path=path)
-        # end if
 
         response.io.output.save(data=response.result, path=path)
 
         return str(path)
-    # end load
 
     def before_save(self, response: HandlingResponse, path: str) -> None:
         """
@@ -483,7 +440,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         :param response: The response object.
         :param path: The path to the file to load.
         """
-    # end before_save
 
     def after_save(self, response: HandlingResponse, path: str) -> None:
         """
@@ -492,7 +448,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         :param response: The response object.
         :param path: The path to the file to load.
         """
-    # end after_save
 
     def execute(self, data: _D, event: FileSystemEvent) -> Results:
         """
@@ -512,12 +467,8 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
                     results.setdefault(base, []).append(
                         pipeline.execute(data=data)
                     )
-                # end for
-            # end for
-        # end for
 
         return results
-    # end execute
 
     def create_response(
             self,
@@ -543,7 +494,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
             caller=self, data=data, pattern=pattern,
             io=io, event=event, output=results
         )
-    # end response
 
     def response(
             self,
@@ -571,7 +521,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         )
 
         return self.process_response(response=response)
-    # end response
 
     def process_response(
             self, response: HandlingResponse[_D, _O]
@@ -587,7 +536,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         dir(self)
 
         return response
-    # end process
 
     def is_savable(self, response: HandlingResponse[_D, _O]) -> bool:
         """
@@ -601,7 +549,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         dir(self)
 
         return response.io.output is not None
-    # end is_savable
 
     def process(
             self, pattern: str, io: IOContainer, event: FileSystemEvent
@@ -641,12 +588,10 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
             response.destination = self.save(response=response, path=destination)
 
             self.after_save(response=response, path=destination)
-        # end if
 
         self.after(pattern=pattern, io=io, event=event)
 
         return response
-    # end process
 
     def handle(self, event: FileSystemEvent) -> None:
         """
@@ -674,8 +619,6 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
                     )
                 )
             ).start()
-        # end if
-    # end handle
 
     def on_any_event(self, event: FileSystemEvent) -> None:
         """
@@ -685,5 +628,3 @@ class PatternHandler(Generic[_D, _O], PatternMatchingEventHandler):
         """
 
         self.handle(event=event)
-    # end on_any_event
-# end PatternHandler

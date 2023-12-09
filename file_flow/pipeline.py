@@ -14,7 +14,6 @@ _O = TypeVar("_O")
 @define
 class PipelineResponse(ProcessResponse[_D, list[OperationResponse[_D, _O]]]):
     """A class to represent a response object for an operation of a file."""
-# end PipelineResponse
 
 class Pipeline(Generic[_D, _O]):
     """A class to represent a pipeline of file operations."""
@@ -27,7 +26,6 @@ class Pipeline(Generic[_D, _O]):
         """
 
         self.operators = list(operators or [])
-    # end __init__
 
     def execute(self, data: _D) -> PipelineResponse:
         """
@@ -50,7 +48,6 @@ class Pipeline(Generic[_D, _O]):
             data = response.output
 
             responses.append(response)
-        # end for
 
         end = dt.datetime.now()
 
@@ -60,5 +57,3 @@ class Pipeline(Generic[_D, _O]):
             data=source,
             output=responses
         )
-    # end execute
-# end Pipeline

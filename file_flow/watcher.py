@@ -17,11 +17,9 @@ class Watcher:
         self.handler = handler
 
         self.observer = Observer()
-    # end __init__
 
     def watch(self) -> None:
         """Handles the runtime of the loop."""
-    # end watch
 
     def run(self) -> None:
         """Runs the loop handling."""
@@ -31,13 +29,9 @@ class Watcher:
 
         while True:
             self.watch()
-        # end while
-    # end run
 
     def stop(self) -> None:
         """Stops the running process, if there is one."""
 
         self.observer.stop()
         self.observer.join()
-    # end stop
-# end Watcher
