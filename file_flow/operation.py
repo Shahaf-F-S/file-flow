@@ -2,8 +2,7 @@
 
 import datetime as dt
 from typing import TypeVar, Generic, Callable
-
-from attrs import define
+from dataclasses import dataclass
 
 from file_flow.process import ProcessTime, ProcessResponse
 
@@ -15,7 +14,7 @@ __all__ = [
 _D = TypeVar("_D")
 _O = TypeVar("_O")
 
-@define
+@dataclass
 class OperationResponse(ProcessResponse[_D, _O]):
     """A class to represent a response object for an operation of a file."""
 

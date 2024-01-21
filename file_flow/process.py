@@ -3,15 +3,14 @@
 import datetime as dt
 from uuid import uuid4
 from typing import Generic, TypeVar, Any
-
-from attrs import define
+from dataclasses import dataclass
 
 __all__ = [
     "ProcessTime",
     "ProcessResponse"
 ]
 
-@define
+@dataclass
 class ProcessTime:
     """A class to represent the start, end and total time for a process to finish."""
 
@@ -31,7 +30,7 @@ class ProcessTime:
 _D = TypeVar("_D")
 _O = TypeVar("_O")
 
-@define
+@dataclass
 class ProcessResponse(Generic[_D, _O]):
     """A class to represent a response object for an operation of a file."""
 

@@ -2,8 +2,7 @@
 
 import datetime as dt
 from typing import Iterable, TypeVar, Generic
-
-from attrs import define
+from dataclasses import dataclass
 
 from file_flow.operation import Operator, OperationResponse
 from file_flow.process import ProcessResponse, ProcessTime
@@ -11,7 +10,7 @@ from file_flow.process import ProcessResponse, ProcessTime
 _D = TypeVar("_D")
 _O = TypeVar("_O")
 
-@define
+@dataclass
 class PipelineResponse(ProcessResponse[_D, list[OperationResponse[_D, _O]]]):
     """A class to represent a response object for an operation of a file."""
 

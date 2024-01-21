@@ -3,8 +3,7 @@
 from typing import (
     TypeVar, Generic, ClassVar, Callable, Any
 )
-
-from attrs import define
+from dataclasses import dataclass
 
 __all__ = [
     "IO",
@@ -15,7 +14,7 @@ __all__ = [
 
 _D = TypeVar("_D")
 
-@define
+@dataclass
 class IO(Generic[_D]):
     """A class to represent a generic io operation handler."""
 
@@ -53,7 +52,7 @@ class IO(Generic[_D]):
         if self.saver is not None:
             self.saver(data, path)
 
-@define
+@dataclass
 class TextIO(IO[str]):
     """A class to represent a text io operation handler."""
 
@@ -83,7 +82,7 @@ class TextIO(IO[str]):
         with open(path, "w") as file:
             file.write(data)
 
-@define
+@dataclass
 class BytesIO(IO[bytes]):
     """A class to represent a bytes io operation handler."""
 
@@ -115,7 +114,7 @@ class BytesIO(IO[bytes]):
 
 _O = TypeVar("_O")
 
-@define
+@dataclass
 class IOContainer(Generic[_D, _O]):
     """A class to contain io objects."""
 

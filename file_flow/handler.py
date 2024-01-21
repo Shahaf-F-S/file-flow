@@ -6,15 +6,14 @@ from pathlib import Path
 import threading
 from typing import Iterable, TypeVar, Generic, Any
 from pathlib import PurePosixPath, PureWindowsPath
-
-from attrs import define
+from dataclasses import dataclass
 
 from watchdog.events import (
     PatternMatchingEventHandler, FileSystemEvent
 )
 
 from file_flow.pipeline import Pipeline, PipelineResponse
-from file_flow.data_io import IOContainer
+from file_flow.io import IOContainer
 
 __all__ = [
     "match_path",
@@ -81,7 +80,7 @@ def match_path(
 _D = TypeVar("_D")
 _O = TypeVar("_O")
 
-@define
+@dataclass
 class HandlingResponse(Generic[_D, _O]):
     """A class to represent the response from the handling process."""
 

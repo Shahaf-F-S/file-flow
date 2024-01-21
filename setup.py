@@ -23,8 +23,8 @@ def main() -> None:
         include=[],
         requirements="requirements.txt",
         dev_requirements="requirements-dev.txt",
-        name='fileflowio',
-        version='0.0.6',
+        name='auto-file-flow',
+        version='0.0.1',
         description=(
             "An event system for file operations "
             "to execute commands for file events."
@@ -32,15 +32,13 @@ def main() -> None:
         license='MIT',
         author="Shahaf Frank-Shapir",
         author_email='shahaffrs@gmail.com',
-        url='https://github.com/Shahaf-F-S/project-template',
+        url='https://github.com/Shahaf-F-S/file-flow',
         long_description_content_type="text/markdown",
         classifiers=[
             "Intended Audience :: Developers",
             "License :: OSI Approved :: MIT License",
             "Programming Language :: Python",
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.8",
-            "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
             "Operating System :: OS Independent"

@@ -1,7 +1,7 @@
 # test.py
 
 from file_flow.events import FileSystemEvent
-from file_flow.data_io import TextIO, IOContainer
+from file_flow.io import TextIO, IOContainer
 from file_flow.pipeline import Pipeline
 from file_flow.operation import Operator
 from file_flow.watcher import Watcher

@@ -2,40 +2,28 @@
 
 > An event system for file operations to execute commands for file events.
 
-first of all
-------------
+## Installation
 
-#### specifics:
+```
+pip install auto-file-flow
+```
 
-- writen and owned by: Shahaf Frank-Shapir
-- all the rights are saved for: Shahaf Frank-Shapir
-- programming languages: python 3.9.12 (100%)
+## example
 
-before we start
----------------
+```python
+from file_flow.events import FileSystemEvent
+from file_flow.io import TextIO, IOContainer
+from file_flow.pipeline import Pipeline
+from file_flow.operation import Operator
+from file_flow.watcher import Watcher
+from file_flow.handler import PatternHandler
 
-#### description:
+handler = PatternHandler(
+  patterns={"*.txt": IOContainer(TextIO(), TextIO())},
+  pipelines={FileSystemEvent: [Pipeline([Operator(lambda data: print(data))])]}
+)
 
-- visit the docs to learn more about this project and how to develop with it.
+watcher = Watcher(root="demo", handler=handler)
 
-#### dependencies:
-
-- opening:
-  For this is a complex program, which uses a lot of modules, there are required dependencies needed
-  in order to run the program. keep in mined the program was writen in python 3.9, so any python version lower
-  than 3.9 might not work properly.
-
-- install app dependencies by writing the "-r" option to install the requirements
-  writen in a file, and write the following line in the project directory:
-````
-pip install -r requirements.txt
-````
-
-run a test
------------
-
-#### run from windows command line (inside the project directory)
-- run with python by writing to the command line in the project directory:
-````
-python test.py
-````
+watcher.run()
+```
